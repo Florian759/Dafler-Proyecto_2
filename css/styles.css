@@ -1,0 +1,141 @@
+:root {
+  --background-color: #f6f7fb;
+  --text-color: #222;
+  --subtext-color: rgb(214, 213, 213);
+  --subtitle-color: rgb(130, 129, 129);
+  --element-background-color: rgb(41, 31, 158); 
+
+  --offer-color: rgb(19, 205, 19);
+  --petition-color: coral;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+h1, h2, h3, h4, h5, p, ul {
+  margin: 0;
+  padding: 0;
+}
+
+/* Estilos de titulos */
+h1, h2, h3, h4, h5 {
+  font-weight: 600;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+
+  min-height: 100vh;
+}
+
+/* Contenido principal */
+main {
+  padding: 11vh 0 9vh;
+}
+
+.main-content{
+  display: flex;
+  flex-direction: column;
+
+  gap: 3vh;
+}
+
+.main-content-header{
+  display: flex;
+  flex-direction: column;
+
+  gap: 1vh;
+}
+
+.main-content-header h2{
+  color: var(--subtitle-color);
+}
+
+.main-content-index{
+  display: flex;
+  align-items: center;
+  justify-content: start;
+
+  gap: 2vh;
+}
+
+.main-content-index-text{
+  display: flex;
+  align-items: center;
+
+  gap: 0.5vh;
+}
+
+.dot{
+  width: 2vh;
+  height: 2vh;
+
+  border-radius: 50%;
+}
+
+.dot.offer{
+  background-color: var(--offer-color);
+}
+
+.dot.petition{
+  background-color: var(--petition-color);
+}
+
+.main-content-slider{
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+
+  gap: 1vh;
+
+  width: 100%;
+}
+
+.card{
+  height: 100%;
+  min-height: 12rem;
+  border: 0;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding: 2vh;
+
+  border-radius: 1vh;
+}
+
+.card.offer{
+  background-color: var(--offer-color);
+}
+
+.card.petition{
+  background-color: var(--petition-color);
+}
+
+.card .card-header{
+  padding: 0;
+  background: none;
+  border: 0;
+}
+
+.card-header h3{
+  font-size: 1.2rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 90%;
+}
+
+.card-description{
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+}
+

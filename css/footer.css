@@ -1,0 +1,18 @@
+footer{
+    position: fixed;
+    bottom: 0;
+
+    width: 100%;
+    height: 5vh;
+
+    background-color: var(--element-background-color);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+footer p{
+    color: var(--subtext-color);
+    font-size: 1.5vh;
+}

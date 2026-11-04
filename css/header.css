@@ -1,0 +1,84 @@
+header{
+    position: fixed;
+
+    width: 100%;
+    height: 7vh;
+
+    background-color: var(--element-background-color);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+/* Parte del logo del header (izquierda) */
+.logo-box a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 1vh;
+
+    color: white;
+    text-decoration: none;
+}
+
+/* Parte de los enlaces del header (centro) */
+.nav-box{
+    display: flex;
+    gap: 2vh;
+}
+
+.nav-box ul li{
+    list-style: none;
+}
+
+.nav-box ul li a{
+    text-decoration: none;
+    color: white;
+
+    border-bottom: 0;
+
+    transition: 0.2s;
+}
+
+.nav-box ul li a:hover{
+    transition: 0.2;
+    border-bottom: 3px solid white;
+}
+
+/* Parte del botón de login del header (derecha) */
+.login-btn-box a{
+    text-decoration: none;
+}
+
+.login-btn-box a button{
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+
+    gap: 0.2vh;
+
+    background-color: transparent;
+
+    border: 1px solid white;
+    border-radius: 0.2vh;
+
+    padding: 0.5vh 1vh;
+
+    color: white;
+
+    transition: 0.2s ease;
+}
+
+.login-btn-box a button span{
+    font-size: 2vh;
+}
+
+/* Animación del botón de login del header */
+.login-btn-box a button:hover{
+    transition: 0.2s ease;
+    background-color: white;
+    color: black;
+}

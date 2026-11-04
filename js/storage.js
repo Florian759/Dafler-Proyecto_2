@@ -22,6 +22,25 @@ export function setUsers(users) {
     localStorage.setItem(USERS_KEY, JSON.stringify(users));
 }
 
+export function setUser(user) {
+    const users = getUsers();
+    const id = users.length ? users[users.length - 1].id + 1 : 1;
+
+    users.push({id, ...user});
+
+    setUsers(users);
+}
+
+export function removeUser(id) {
+    const users = getUsers();
+    const index = users.findIndex((u) => u.id === id);
+
+    if (index !== -1) {
+        users.splice(index, 1);
+        setUsers(users);
+    }
+}
+
 export function getActiveUser() {
     const email = localStorage.getItem(ACTIVE_USER_KEY);
 

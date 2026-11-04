@@ -1,4 +1,4 @@
-import { getUsers, setUsers } from "./storage.js";
+import { getUsers, setUser, removeUser } from "./storage.js";
 import { lang } from "./data.js";
 import { initNavbar } from "./common.js";
 
@@ -6,9 +6,9 @@ const form = document.getElementById("form-add-user");
 const table = document.getElementById("users-table");
 const count = document.getElementById("count");
 const langSelect = document.getElementById("native-lang");
-const users = getUsers();
 
 function drawTable() {
+    const users = getUsers();
     const rows = users.map((item) => {
         const row = document.createElement("tr");
         row.innerHTML = `
@@ -32,30 +32,22 @@ function drawTable() {
 function addUser(evento) {
     evento.preventDefault();
 
-    const users = getUsers();
-    const id = users.length ? users[users.length - 1].id + 1 : 1;
-
-    users.push({
-        id: id,
+    const user = {
         name: document.getElementById("name").value.trim(),
         email: document.getElementById("email").value.trim(),
         password: document.getElementById("password").value,
         nativeLang: langSelect.value,
         city: document.getElementById("city").value.trim()
-    });
+    };
 
-    setUsers(users);
+    setUser(user);
 
     form.reset();
     drawTable();
 }
 
 function deleteUser(id) {
-    const index = users.findIndex((user) => user.id === id);
-
-    users.splice(index, 1);
-    setUsers(users);
-    
+    removeUser(id);
     drawTable();
 }
 

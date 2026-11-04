@@ -1,10 +1,7 @@
-import { users } from "./data.js";
+import { getUsers } from "./storage.js";
 
 const form = document.getElementById("login-user");
 const message = document.getElementById("login-msg");
-const loginBtn = document.querySelector(".login-btn-box a");
-const userName = document.getElementById("user-name");
-const userNameText = document.getElementById("user-name-text");
 
 function showMessage(text, ok) {
     message.textContent = text;
@@ -15,22 +12,33 @@ function showMessage(text, ok) {
 function login(evento) {
     evento.preventDefault();
 
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
-    const user = users.find((item) => item.email === email && item.password === password);
+    form.classList.add("was-validated");
 
-    if (!user) {
-        showMessage("Correo o contraseña incorrectos.", false);
+    if (!form.checkValidity()) {
+        showMessage("Revisa los campos marcados en rojo.", false);
         return;
     }
 
-    showMessage(`Te has logeado como ${user.name}.`, true);
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;   
 
-    loginBtn.hidden = true;
-    userNameText.textContent = user.name;
-    userName.classList.replace("d-none", "d-flex");
+    try {
+        const users =  getUsers();
+        const user = users.find((item) => item.email === email && item.password === password);
 
-    form.reset();
+        if (!user) {
+            showMessage("Correo o contraseña incorrectos.", false);
+            return;
+        }
+
+        form.reset();
+        form.classList.remove("was-validated");
+
+        window.location.href = "index.html";
+    } catch (error) {
+        console.error(error);
+        showMessage("No se ha podido acceder al almacenamiento del navegador.", false);
+    }
 }
 
 form.addEventListener("submit", login);

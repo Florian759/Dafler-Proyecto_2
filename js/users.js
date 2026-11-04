@@ -1,4 +1,5 @@
 import { users, lang } from "./data.js";
+import { initNavbar } from "./common.js";
 
 const form = document.getElementById("form-add-user");
 const table = document.getElementById("users-table");
@@ -58,6 +59,8 @@ function fillLangs() {
 }
 
 function start() {
+    initNavbar();
+
     fillLangs();
     drawTable();
 }

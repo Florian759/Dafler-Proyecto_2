@@ -1,4 +1,5 @@
-import { getUsers } from "./storage.js";
+import { getUsers, setActiveUser } from "./storage.js";
+import { initNavbar } from "./common.js";
 
 const form = document.getElementById("login-user");
 const message = document.getElementById("login-msg");
@@ -31,6 +32,8 @@ function login(evento) {
             return;
         }
 
+        setActiveUser(user.email);
+
         form.reset();
         form.classList.remove("was-validated");
 
@@ -41,4 +44,9 @@ function login(evento) {
     }
 }
 
+function start() {
+    initNavbar();   
+}
+
 form.addEventListener("submit", login);
+document.addEventListener("DOMContentLoaded", start);

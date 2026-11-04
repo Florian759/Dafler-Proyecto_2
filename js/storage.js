@@ -18,7 +18,7 @@ export function getUsers() {
     return defaultUsers;
 }
 
-function setUsers(users) {
+export function setUsers(users) {
     localStorage.setItem(USERS_KEY, JSON.stringify(users));
 }
 

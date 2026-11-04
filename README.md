@@ -8,3 +8,7 @@
 * Las clases/id de las etiquetas de html deben escribirse con un guión (-) como espacio.
 
 ### División del trabajo:
+- Modulo almacenaje.js (Conjunto)
+- Página de Login y Usuarios (Florian)
+- Página de Intercambios + gráfico Canvas (Erik)
+- Dashboard con Drag and Drop y Filtro (Daniel)

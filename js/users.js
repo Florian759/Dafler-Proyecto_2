@@ -1,10 +1,12 @@
-import { users, lang } from "./data.js";
+import { getUsers, setUsers } from "./storage.js";
+import { lang } from "./data.js";
 import { initNavbar } from "./common.js";
 
 const form = document.getElementById("form-add-user");
 const table = document.getElementById("users-table");
 const count = document.getElementById("count");
 const langSelect = document.getElementById("native-lang");
+const users = getUsers();
 
 function drawTable() {
     const rows = users.map((item) => {
@@ -30,6 +32,7 @@ function drawTable() {
 function addUser(evento) {
     evento.preventDefault();
 
+    const users = getUsers();
     const id = users.length ? users[users.length - 1].id + 1 : 1;
 
     users.push({
@@ -41,6 +44,8 @@ function addUser(evento) {
         city: document.getElementById("city").value.trim()
     });
 
+    setUsers(users);
+
     form.reset();
     drawTable();
 }
@@ -49,6 +54,8 @@ function deleteUser(id) {
     const index = users.findIndex((user) => user.id === id);
 
     users.splice(index, 1);
+    setUsers(users);
+    
     drawTable();
 }
 

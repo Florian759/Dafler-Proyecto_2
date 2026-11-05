@@ -22,6 +22,20 @@ export function setUsers(users) {
     localStorage.setItem(USERS_KEY, JSON.stringify(users));
 }
 
+export function getUserById(id) {
+    const users = getUsers();
+    const user = users.find((u) => u.id === id);
+    
+    return user;
+}
+
+export function getUserByEmail(email) {
+    const users = getUsers();
+    const user = users.find((u) => u.email === email);
+    
+    return user;
+}
+
 export function setUser(user) {
     const users = getUsers();
     const id = users.length ? users[users.length - 1].id + 1 : 1;
@@ -31,7 +45,7 @@ export function setUser(user) {
     setUsers(users);
 }
 
-export function removeUser(id) {
+export function removeUserById(id) {
     const users = getUsers();
     const index = users.findIndex((u) => u.id === id);
 

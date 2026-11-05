@@ -1,14 +1,8 @@
 import { getUsers, setActiveUser } from "./storage.js";
-import { initNavbar } from "./common.js";
+import { initNavbar, showMessage } from "./common.js";
 
 const form = document.getElementById("login-user");
-const message = document.getElementById("login-msg");
-
-function showMessage(text, ok) {
-    message.textContent = text;
-    message.className = `mt-3 mb-0 ${ok ? "text-success" : "text-danger"}`;
-    message.hidden = false;
-}
+const message = document.getElementById("mensaje");
 
 function login(evento) {
     evento.preventDefault();
@@ -16,7 +10,7 @@ function login(evento) {
     form.classList.add("was-validated");
 
     if (!form.checkValidity()) {
-        showMessage("Revisa los campos marcados en rojo.", false);
+        showMessage(message, "Revisa los campos marcados en rojo.", false);
         return;
     }
 
@@ -28,7 +22,7 @@ function login(evento) {
         const user = users.find((item) => item.email === email && item.password === password);
 
         if (!user) {
-            showMessage("Correo o contraseña incorrectos.", false);
+            showMessage(message, "Correo o contraseña incorrectos.", false);
             return;
         }
 
@@ -40,7 +34,7 @@ function login(evento) {
         window.location.href = "index.html";
     } catch (error) {
         console.error(error);
-        showMessage("No se ha podido acceder al almacenamiento del navegador.", false);
+        showMessage(message, "No se ha podido acceder al almacenamiento del navegador.", false);
     }
 }
 

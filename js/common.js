@@ -23,3 +23,9 @@ export function logout() {
     removeActiveUser(); 
     window.location.href = "login.html";
 }
+
+export function showMessage(element, text, ok) {
+    element.textContent = text;
+    element.className = `alert ${ok ? "alert-success" : "alert-danger"} mt-3 mb-0`;
+    element.hidden = false;
+}

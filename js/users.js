@@ -1,11 +1,12 @@
-import { getUsers, setUser, removeUser } from "./storage.js";
+import { getUsers, setUser, removeUserById, getUserById } from "./storage.js";
 import { lang } from "./data.js";
-import { initNavbar } from "./common.js";
+import { initNavbar, showMessage } from "./common.js";
 
 const form = document.getElementById("form-add-user");
 const table = document.getElementById("users-table");
 const count = document.getElementById("count");
 const langSelect = document.getElementById("native-lang");
+const message = document.getElementById("mensaje");
 
 function drawTable() {
     const users = getUsers();
@@ -31,24 +32,47 @@ function drawTable() {
 
 function addUser(evento) {
     evento.preventDefault();
+    form.classList.add("was-validated");
 
-    const user = {
-        name: document.getElementById("name").value.trim(),
-        email: document.getElementById("email").value.trim(),
-        password: document.getElementById("password").value,
-        nativeLang: langSelect.value,
-        city: document.getElementById("city").value.trim()
-    };
+    const email = document.getElementById("email").value.trim();
 
-    setUser(user);
+    if (getUserByEmail(email)) {
+        showMessage(message, "El correo ya está registrado.", false);
+        return;
+    }
+    
+    if (!form.checkValidity()) {
+        showMessage(message, "Revisa los campos marcados en rojo.", false);
+        return;
+    }
 
-    form.reset();
-    drawTable();
+    try {
+        const user = {
+            name: document.getElementById("name").value.trim(),
+            email: email,
+            password: document.getElementById("password").value,
+            nativeLang: langSelect.value,
+            city: document.getElementById("city").value.trim()
+        };
+
+        setUser(user);
+        showMessage(message, `Usuario ${user.name} creado.`, true);
+
+        form.reset();
+        form.classList.remove("was-validated");
+        drawTable();
+    } catch (error) {
+        showMessage(message, error.message, false);
+    }
 }
 
 function deleteUser(id) {
-    removeUser(id);
-    drawTable();
+    const user = getUserById(id);
+
+    if (user && confirm(`¿Estás seguro de que deseas eliminar el usuario "${user.name}"?`)) {
+        removeUserById(id);
+        drawTable();
+    }
 }
 
 function fillLangs() {

@@ -1,4 +1,5 @@
 import { exchanges, lang, levels, type, users } from "./data.js";
+import { initNavbar } from "./common.js";
 
 const form = document.getElementById("form-add-exchange");
 const table = document.getElementById("exchange-table");
@@ -86,6 +87,8 @@ function fillUsers() {
 }
 
 function start() {
+    initNavbar();
+
     fillLangs();
     fillLevels();
     fillModalities();

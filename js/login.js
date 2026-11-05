@@ -1,36 +1,46 @@
-import { users } from "./data.js";
+import { getUsers, setActiveUser } from "./storage.js";
+import { initNavbar, showMessage } from "./common.js";
 
 const form = document.getElementById("login-user");
-const message = document.getElementById("login-msg");
-const loginBtn = document.querySelector(".login-btn-box a");
-const userName = document.getElementById("user-name");
-const userNameText = document.getElementById("user-name-text");
-
-function showMessage(text, ok) {
-    message.textContent = text;
-    message.className = `mt-3 mb-0 ${ok ? "text-success" : "text-danger"}`;
-    message.hidden = false;
-}
+const message = document.getElementById("mensaje");
 
 function login(evento) {
     evento.preventDefault();
 
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
-    const user = users.find((item) => item.email === email && item.password === password);
+    form.classList.add("was-validated");
 
-    if (!user) {
-        showMessage("Correo o contraseña incorrectos.", false);
+    if (!form.checkValidity()) {
+        showMessage(message, "Revisa los campos marcados en rojo.", false);
         return;
     }
 
-    showMessage(`Te has logeado como ${user.name}.`, true);
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;   
 
-    loginBtn.hidden = true;
-    userNameText.textContent = user.name;
-    userName.classList.replace("d-none", "d-flex");
+    try {
+        const users =  getUsers();
+        const user = users.find((item) => item.email === email && item.password === password);
 
-    form.reset();
+        if (!user) {
+            showMessage(message, "Correo o contraseña incorrectos.", false);
+            return;
+        }
+
+        setActiveUser(user.email);
+
+        form.reset();
+        form.classList.remove("was-validated");
+
+        window.location.href = "index.html";
+    } catch (error) {
+        console.error(error);
+        showMessage(message, "No se ha podido acceder al almacenamiento del navegador.", false);
+    }
+}
+
+function start() {
+    initNavbar();   
 }
 
 form.addEventListener("submit", login);
+document.addEventListener("DOMContentLoaded", start);

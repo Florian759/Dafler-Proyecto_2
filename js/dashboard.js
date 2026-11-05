@@ -1,4 +1,5 @@
 import { exchanges } from "./data.js";
+import { initNavbar } from "./common.js";
 
 const offersCardsContainer = document.getElementById("offers-cards");
 const petitionsCardsContainer = document.getElementById("petitions-cards");
@@ -56,6 +57,7 @@ function drawPetitionCard(petitions) {
 }
 
 function start() {
+    initNavbar();
     const filteredExchangesOffers = exchanges.filter((item) => item.service === "Oferta");
     const filteredExchangesPetitions = exchanges.filter((item) => item.service === "Petición");
 

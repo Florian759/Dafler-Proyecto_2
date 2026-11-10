@@ -1,5 +1,5 @@
-import { exchanges, lang, levels, type, users } from "./data.js";
-import { initNavbar } from "./common.js";
+import { lang, levels, type, users } from "./data.js";
+import { initNavbar, showMessage } from "./common.js";
 import { obtainExchanges, createExchange, removeExchange } from "./storage.js";
 
 const form = document.getElementById("form-add-exchange");
@@ -9,6 +9,7 @@ const languageHTML = document.getElementById("language");
 const levelHTML = document.getElementById("level");
 const modalityHTML = document.getElementById("modality");
 const userHTML = document.getElementById("user");
+const message = document.getElementById("mensaje");
 
 async function drawTable() {
     let exchanges = [];
@@ -17,6 +18,7 @@ async function drawTable() {
         exchanges = await obtainExchanges();
     } catch (error) {
         console.error(error);
+        showMessage(message, "No se han podido leer los intercambios de IndexedDB.", false);
     }
 
     const rows = exchanges.map((item) => {
@@ -45,22 +47,29 @@ async function drawTable() {
 
 function addExchange(evento) {
     evento.preventDefault();
+    form.classList.add("was-validated");
 
-    const id = exchanges.length ? exchanges[exchanges.length - 1].id + 1 : 1;
+    if (!form.checkValidity()) {
+        showMessage(message, "Revisa los campos marcados en rojo.", false);
+        return;
+    }
 
-    createExchange({
-        id: id,
-        service: document.getElementById("service").value.trim(),
-        lang: languageHTML.value,
-        level: levelHTML.value,
-        type: modalityHTML.value,
-        user: userHTML.value,
-        title: document.getElementById("title").value.trim(),
-        description: document.getElementById("description").value.trim(),
-        date: document.getElementById("date").value.trim(),
-
-    });
+    try {
+        createExchange({
+            service: document.getElementById("service").value.trim(),
+            lang: languageHTML.value,
+            level: levelHTML.value,
+            type: modalityHTML.value,
+            user: userHTML.value,
+            title: document.getElementById("title").value.trim(),
+            description: document.getElementById("description").value.trim(),
+            date: document.getElementById("date").value.trim(),
+        });
+    } catch (error) {
+        showMessage(message, error.message, false);
+    }
     form.reset();
+    form.classList.remove("was-validated");
     drawTable();
 }
 

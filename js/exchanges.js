@@ -134,6 +134,8 @@ async function addExchange(evento) {
         return;
     }
 
+    const [year, month, day] = document.getElementById("date").value.split("-");
+
     try {
         await createExchange({
             service: serviceHTML.value,
@@ -143,7 +145,7 @@ async function addExchange(evento) {
             user: userHTML.value,
             title: document.getElementById("title").value.trim(),
             description: document.getElementById("description").value.trim(),
-            date: document.getElementById("date").value.trim(),
+            date: `${day}-${month}-${year}`,
         });
     } catch (error) {
         showMessage(message, error.message, false);

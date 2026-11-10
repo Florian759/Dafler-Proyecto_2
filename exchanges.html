@@ -61,12 +61,10 @@
               <form id="form-add-exchange" novalidate>
                 <div class="mb-3">
                   <label for="service" class="form-label">Servicio</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="service"
-                    required
-                  />
+                  <select class="form-select" id="service" required>
+                    <option value="Oferta">Oferta</option>
+                    <option value="Petición">Petición</option>
+                  </select>
                 </div>
                 
                 <div class="mb-3">

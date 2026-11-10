@@ -5,6 +5,7 @@ import { obtainExchanges, createExchange, removeExchange } from "./storage.js";
 const form = document.getElementById("form-add-exchange");
 const table = document.getElementById("exchange-table");
 const count = document.getElementById("count");
+const serviceHTML = document.getElementById("service");
 const languageHTML = document.getElementById("language");
 const levelHTML = document.getElementById("level");
 const modalityHTML = document.getElementById("modality");
@@ -133,19 +134,22 @@ async function addExchange(evento) {
         return;
     }
 
+    const [year, month, day] = document.getElementById("date").value.split("-");
+
     try {
-        createExchange({
-            service: document.getElementById("service").value.trim(),
+        await createExchange({
+            service: serviceHTML.value,
             lang: languageHTML.value,
             level: levelHTML.value,
             type: modalityHTML.value,
             user: userHTML.value,
             title: document.getElementById("title").value.trim(),
             description: document.getElementById("description").value.trim(),
-            date: document.getElementById("date").value.trim(),
+            date: `${day}-${month}-${year}`,
         });
     } catch (error) {
         showMessage(message, error.message, false);
+        return;
     }
     form.reset();
     form.classList.remove("was-validated");

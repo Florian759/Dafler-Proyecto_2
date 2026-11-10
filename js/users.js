@@ -1,4 +1,4 @@
-import { getUsers, setUser, removeUserById, getUserById } from "./storage.js";
+import { getUsers, setUser, removeUserById, getUserById, getUserByEmail } from "./storage.js";
 import { lang } from "./data.js";
 import { initNavbar, showMessage } from "./common.js";
 
@@ -34,19 +34,19 @@ function addUser(evento) {
     evento.preventDefault();
     form.classList.add("was-validated");
 
-    const email = document.getElementById("email").value.trim();
-
-    if (getUserByEmail(email)) {
-        showMessage(message, "El correo ya está registrado.", false);
-        return;
-    }
-    
     if (!form.checkValidity()) {
         showMessage(message, "Revisa los campos marcados en rojo.", false);
         return;
     }
 
+    const email = document.getElementById("email").value.trim();
+
     try {
+        if (getUserByEmail(email)) {
+            showMessage(message, "El correo ya está registrado.", false);
+            return;
+        }
+
         const user = {
             name: document.getElementById("name").value.trim(),
             email: email,

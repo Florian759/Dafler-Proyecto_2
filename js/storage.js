@@ -1,4 +1,4 @@
-import { users as defaultUsers } from "./data.js";
+import { users as defaultUsers, exchanges as initialExchanges } from "./data.js";
 
 const USERS_KEY = "users";
 const ACTIVE_USER_KEY = "activeUser";
@@ -97,4 +97,21 @@ function openDB() {
     });
 
     return connect;
+}
+
+async function operate(storage, mode, operation) {
+    const db = await openDB();
+
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction(storage, mode);
+        const petition = operation(transaction.objectStore(storage));
+
+        transaction.oncomplete = () => resolve(petition.result);
+        transaction.onerror = () => reject(transaction.error);
+        transaction.onabort = () => reject(transaction.error);
+    });
+}
+
+export function obtainExchanges() {
+    return operate("exchanges", "readonly", (store) => store.getAll());
 }

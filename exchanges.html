@@ -79,7 +79,6 @@
                   />
                 </div>
 
-
                 <div class="row mb-3">
                   <div class="col-md-6">
                     <label for="language" class="form-label">Idioma</label>
@@ -133,7 +132,7 @@
                <div class="mb-3">
                   <label for="date" class="form-label">Fecha</label>
                   <input
-                    type="text"
+                    type="date"
                     class="form-control"
                     id="date"
                     required
@@ -142,7 +141,7 @@
 
                 <button type="submit" class="btn btn-primary w-100">Añadir</button>
               </form>
-
+              <div id="mensaje" role="alert" hidden></div>
             </div>
           </div>
 
@@ -173,9 +172,13 @@
 
               </div>
             </div>
-          </div>
 
-          
+            <div class="bg-white rounded p-4 mt-4">
+              <h3 class="mb-3">Intercambios por idioma</h3>
+              <canvas id="graphic" class="w-100" role="img" aria-label="Gráfico de ofertas y peticiones por idioma"></canvas>
+            </div>
+
+          </div>
         </div>
       </div>
     </main>

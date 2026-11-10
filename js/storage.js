@@ -1,4 +1,4 @@
-import { users as defaultUsers } from "./data.js";
+import { users as defaultUsers, exchanges as initialExchanges } from "./data.js";
 
 const USERS_KEY = "users";
 const ACTIVE_USER_KEY = "activeUser";
@@ -75,4 +75,51 @@ export function removeActiveUser() {
 
     localStorage.removeItem(ACTIVE_USER_KEY);
     return true;
+}
+
+const DB_NAME = "tandemDafler";
+const DB_VERSION = 1;
+let connect;
+
+function openDB() {
+    connect ??= new Promise((resolve, reject) => {
+        const petition = indexedDB.open(DB_NAME, DB_VERSION);
+
+        petition.onupgradeneeded = () => {
+            const db = petition.result;
+            const exchanges = db.createObjectStore("exchanges", { keyPath: "id", autoIncrement: true });
+            initialExchanges.forEach((item) => exchanges.add(item));
+            db.createObjectStore("selection", { keyPath: "email" });
+        };
+
+        petition.onsuccess = () => resolve(petition.result);
+        petition.onerror = () => reject(petition.error);
+    });
+
+    return connect;
+}
+
+async function operate(storage, mode, operation) {
+    const db = await openDB();
+
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction(storage, mode);
+        const petition = operation(transaction.objectStore(storage));
+
+        transaction.oncomplete = () => resolve(petition.result);
+        transaction.onerror = () => reject(transaction.error);
+        transaction.onabort = () => reject(transaction.error);
+    });
+}
+
+export function obtainExchanges() {
+    return operate("exchanges", "readonly", (store) => store.getAll());
+}
+
+export function createExchange(datos) {
+    return operate("exchanges", "readwrite", (store) => store.add(datos));
+}
+
+export function removeExchange(id) {
+    return operate("exchanges", "readwrite", (store) => store.delete(id));
 }

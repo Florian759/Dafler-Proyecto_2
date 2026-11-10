@@ -1,6 +1,6 @@
 import { exchanges, lang, levels, type, users } from "./data.js";
 import { initNavbar } from "./common.js";
-import { obtainExchanges } from "./storage.js";
+import { obtainExchanges, createExchange, removeExchange } from "./storage.js";
 
 const form = document.getElementById("form-add-exchange");
 const table = document.getElementById("exchange-table");
@@ -48,7 +48,7 @@ function addExchange(evento) {
 
     const id = exchanges.length ? exchanges[exchanges.length - 1].id + 1 : 1;
 
-    exchanges.push({
+    createExchange({
         id: id,
         service: document.getElementById("service").value.trim(),
         lang: languageHTML.value,
@@ -60,14 +60,12 @@ function addExchange(evento) {
         date: document.getElementById("date").value.trim(),
 
     });
-console.log(exchanges);
     form.reset();
     drawTable();
 }
 
 function deleteExchange(id) {
-    const index = exchanges.findIndex((exchange) => exchange.id === id);
-    exchanges.splice(index, 1);
+    removeExchange(id);
     drawTable();
 }
 

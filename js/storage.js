@@ -115,3 +115,11 @@ async function operate(storage, mode, operation) {
 export function obtainExchanges() {
     return operate("exchanges", "readonly", (store) => store.getAll());
 }
+
+export function createExchange(datos) {
+    return operate("exchanges", "readwrite", (store) => store.add(datos));
+}
+
+export function removeExchange(id) {
+    return operate("exchanges", "readwrite", (store) => store.delete(id));
+}

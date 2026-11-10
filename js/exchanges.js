@@ -1,5 +1,6 @@
 import { exchanges, lang, levels, type, users } from "./data.js";
 import { initNavbar } from "./common.js";
+import { obtainExchanges } from "./storage.js";
 
 const form = document.getElementById("form-add-exchange");
 const table = document.getElementById("exchange-table");
@@ -9,7 +10,15 @@ const levelHTML = document.getElementById("level");
 const modalityHTML = document.getElementById("modality");
 const userHTML = document.getElementById("user");
 
-function drawTable() {
+async function drawTable() {
+    let exchanges = [];
+
+    try {
+        exchanges = await obtainExchanges();
+    } catch (error) {
+        console.error(error);
+    }
+
     const rows = exchanges.map((item) => {
         const row = document.createElement("tr");
         row.innerHTML = `

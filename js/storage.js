@@ -76,3 +76,25 @@ export function removeActiveUser() {
     localStorage.removeItem(ACTIVE_USER_KEY);
     return true;
 }
+
+const DB_NAME = "tandemDafler";
+const DB_VERSION = 1;
+let connect;
+
+function openDB() {
+    connect ??= new Promise((resolve, reject) => {
+        const petition = indexedDB.open(DB_NAME, DB_VERSION);
+
+        petition.onupgradeneeded = () => {
+            const db = petition.result;
+            const exchanges = db.createObjectStore("exchanges", { keyPath: "id", autoIncrement: true });
+            initialExchanges.forEach((item) => exchanges.add(item));
+            db.createObjectStore("selection", { keyPath: "email" });
+        };
+
+        petition.onsuccess = () => resolve(petition.result);
+        petition.onerror = () => reject(petition.error);
+    });
+
+    return connect;
+}

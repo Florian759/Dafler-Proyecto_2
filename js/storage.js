@@ -116,10 +116,19 @@ export function obtainExchanges() {
     return operate("exchanges", "readonly", (store) => store.getAll());
 }
 
-export function createExchange(datos) {
-    return operate("exchanges", "readwrite", (store) => store.add(datos));
+export function createExchange(exchange) {
+    return operate("exchanges", "readwrite", (store) => store.add(exchange));
 }
 
 export function removeExchange(id) {
     return operate("exchanges", "readwrite", (store) => store.delete(id));
+}
+
+export async function getSelection(email = "anonymous") {
+    const register = await operate("selection", "readonly", (store) => store.get(email));
+    return register ? register.ids : [];
+}
+
+export function saveSelection(ids, email = "anonymous") {
+    return operate("selection", "readwrite", (store) => store.put({ email, ids }));
 }

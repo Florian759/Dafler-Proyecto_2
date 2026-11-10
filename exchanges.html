@@ -8,6 +8,7 @@
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
 
     <!-- Estilos de css -->
     <link rel="stylesheet" href="css/header.css" />
@@ -38,6 +39,10 @@
                 <span id="logo-img" class="material-symbols-rounded">login</span>
                 <p>Login</p>
             </button></a>
+            <div id="user-name" class="d-none align-items-center gap-2 text-white">
+                <i class="bi bi-person-circle fs-5"></i>
+                <p id="user-name-text" class="mb-0"></p>
+            </div>
         </div>
     </header>
 
@@ -56,12 +61,10 @@
               <form id="form-add-exchange" novalidate>
                 <div class="mb-3">
                   <label for="service" class="form-label">Servicio</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="service"
-                    required
-                  />
+                  <select class="form-select" id="service" required>
+                    <option value="Oferta">Oferta</option>
+                    <option value="Petición">Petición</option>
+                  </select>
                 </div>
                 
                 <div class="mb-3">
@@ -73,7 +76,6 @@
                     required
                   />
                 </div>
-
 
                 <div class="row mb-3">
                   <div class="col-md-6">
@@ -128,7 +130,7 @@
                <div class="mb-3">
                   <label for="date" class="form-label">Fecha</label>
                   <input
-                    type="text"
+                    type="date"
                     class="form-control"
                     id="date"
                     required
@@ -137,7 +139,7 @@
 
                 <button type="submit" class="btn btn-primary w-100">Añadir</button>
               </form>
-
+              <div id="mensaje" role="alert" hidden></div>
             </div>
           </div>
 
@@ -168,9 +170,13 @@
 
               </div>
             </div>
-          </div>
 
-          
+            <div class="bg-white rounded p-4 mt-4">
+              <h3 class="mb-3">Intercambios por idioma</h3>
+              <canvas id="graphic" class="w-100" role="img" aria-label="Gráfico de ofertas y peticiones por idioma"></canvas>
+            </div>
+
+          </div>
         </div>
       </div>
     </main>

@@ -82,3 +82,7 @@ header{
     background-color: white;
     color: black;
 }
+
+#user-name {
+    cursor: pointer;
+}
